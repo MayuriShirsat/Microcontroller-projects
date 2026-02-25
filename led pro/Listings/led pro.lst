@@ -1,0 +1,59 @@
+C51 COMPILER V9.60.7.0   LED_PRO                                                           09/27/2025 10:45:18 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE LED_PRO
+OBJECT MODULE PLACED IN .\Objects\led pro.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE led pro.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\l
+                    -ed pro.lst) TABS(2) OBJECT(.\Objects\led pro.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          
+   3          void delay(unsigned int count){
+   4   1      while(count){
+   5   2      unsigned int i;
+   6   2      i=115;
+   7   2      while(i>0)
+   8   2      i--;
+   9   2      count--;
+  10   2        }
+  11   1      }
+  12          void main(){
+  13   1        
+  14   1      unsigned char i;
+  15   1      while(1)
+  16   1      {
+  17   2      for(i=0;i<10;i++){
+  18   3      P3 = 0xFF;
+  19   3      delay(500);
+  20   3      P3 =0x00;
+  21   3      delay(500);
+  22   3      }
+  23   2        
+  24   2      delay(1000);
+  25   2        
+  26   2      for(i=0;i<10;i++){
+  27   3      P3 = 0x55;
+  28   3      delay(500);
+  29   3      P3 = 0xAA;
+  30   3      delay(500);
+  31   3      }
+  32   2      
+  33   2      delay(1000);
+  34   2        }
+  35   1      } 
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     88    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

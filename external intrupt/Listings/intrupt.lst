@@ -1,0 +1,97 @@
+C51 COMPILER V9.60.7.0   INTRUPT                                                           09/27/2025 16:29:25 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE INTRUPT
+OBJECT MODULE PLACED IN .\Objects\intrupt.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE intrupt.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\i
+                    -ntrupt.lst) TABS(2) OBJECT(.\Objects\intrupt.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include <stdio.h>
+   3          
+   4          sbit RS = P3^1;
+   5          sbit EN = P3^2;
+   6          sbit led = P3^0;
+   7          
+   8          void delay_ms(unsigned int ms);
+   9          void lcd_cmd(unsigned char cmd);
+  10          void lcd_data(unsigned char dat);
+  11          void lcd_init();
+  12          void lcd_string(char *str);
+  13          
+  14          void main() {
+  15   1          unsigned int sec = 0;
+  16   1        char buffer[16];//to store the sec in integer form as LCD can not read integers (except:"1","0")
+  17   1      
+  18   1          lcd_init();//call
+  19   1      
+  20   1          lcd_string("  Welcome !!!  ");
+  21   1          delay_ms(2000);      
+  22   1          lcd_cmd(0x01);       // Clear screen
+  23   1          lcd_string("Counting Secs:");
+  24   1          EA = 1;
+  25   1          EX0 = 1;
+  26   1          IT0 = 1;
+  27   1          while(1) {
+  28   2              lcd_cmd(0xC0);   // Move to 2nd line
+  29   2            sprintf(buffer, "Sec: %u   ", sec);//hold sce value as "Sec:5" etc
+  30   2              lcd_string(buffer);//pass to string to display
+  31   2              sec++;
+  32   2              delay_ms(1000);  // 1 second delay
+  33   2          }
+  34   1      }
+  35          void delay_ms(unsigned int ms) {
+  36   1          unsigned int i,j;
+  37   1          for(i=0;i<ms;i++)
+  38   1              for(j=0;j<1275;j++);  
+  39   1      }
+  40          void lcd_cmd(unsigned char cmd) {
+  41   1          P2 = cmd;
+  42   1          RS = 0;
+  43   1          EN = 1;
+  44   1          delay_ms(2);
+  45   1          EN = 0;
+  46   1      }
+  47          void lcd_data(unsigned char da) {
+  48   1          P2 = da;
+  49   1          RS = 1;
+  50   1          EN = 1;
+  51   1          delay_ms(2);
+  52   1          EN = 0;
+  53   1      }
+  54          void lcd_init() {   //command og LCD
+C51 COMPILER V9.60.7.0   INTRUPT                                                           09/27/2025 16:29:25 PAGE 2   
+
+  55   1          lcd_cmd(0x38);  
+  56   1          lcd_cmd(0x0C);  
+  57   1          lcd_cmd(0x06);  
+  58   1          lcd_cmd(0x01);  
+  59   1          delay_ms(2);
+  60   1      }
+  61          
+  62          void lcd_string(char *str) {
+  63   1          while(*str != '\0') {
+  64   2              lcd_data(*str++);
+  65   2          }
+  66   1      }
+  67          void ISR_ex0(void) interrupt 0 //external interrupt
+  68          {
+  69   1        led = ~led;
+  70   1        //never use delay here in interrupt fun
+  71   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    224    ----
+   CONSTANT SIZE    =     42    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      21
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

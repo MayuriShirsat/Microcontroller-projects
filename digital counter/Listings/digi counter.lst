@@ -1,0 +1,48 @@
+C51 COMPILER V9.60.7.0   DIGI_COUNTER                                                      10/02/2025 13:14:59 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE DIGI_COUNTER
+OBJECT MODULE PLACED IN .\Objects\digi counter.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE digi counter.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listi
+                    -ngs\digi counter.lst) TABS(2) OBJECT(.\Objects\digi counter.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          
+   3          unsigned char arr[10]={0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F};
+   4          //arr[] Lookup table is for LED 
+   5          void delay(unsigned int count){
+   6   1        unsigned int i;
+   7   1        while(count){
+   8   2          i=115;
+   9   2          while(i>0){
+  10   3            i--;
+  11   3            count--;
+  12   3          }
+  13   2        }
+  14   1      }
+  15            void main(){
+  16   1          unsigned char ch = 0;
+  17   1          while(1){
+  18   2            P2 = arr[ch];//for ch=0 0x3F(0011 1111) ie 0 is on led at P2 port 
+  19   2            delay(500);
+  20   2            ch++;
+  21   2            if(ch>9)
+  22   2              ch=0;}
+  23   1            }
+  24                
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     57    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     10    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

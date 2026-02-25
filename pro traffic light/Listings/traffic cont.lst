@@ -1,0 +1,60 @@
+C51 COMPILER V9.60.7.0   TRAFFIC_CONT                                                      09/28/2025 14:34:53 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE TRAFFIC_CONT
+OBJECT MODULE PLACED IN .\Objects\traffic cont.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE traffic cont.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listi
+                    -ngs\traffic cont.lst) TABS(2) OBJECT(.\Objects\traffic cont.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          sbit red = P2^0;
+   3          sbit green = P2^1;
+   4          sbit yellow = P2^2;
+   5          
+   6          void delay(unsigned int count){
+   7   1          unsigned int i,j;
+   8   1          for(i=0;i<count;i++){
+   9   2            for(j=0;j<=1275;j++){}
+  10   2          }
+  11   1      }
+  12            
+  13          void main(){
+  14   1        unsigned char arr[10]={0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F};
+  15   1        unsigned int i;
+  16   1            
+  17   1      while(1){ 
+  18   2        red = 1;
+  19   2        for(i=0;i<10;i++){
+  20   3          P1 = arr[i];
+  21   3          delay(1000);
+  22   3        }   
+  23   2        red=0;
+  24   2              
+  25   2        green = 1;
+  26   2        for(i=0;i<10;i++){
+  27   3          P1 = arr[i];
+  28   3          delay(1000);
+  29   3        }
+  30   2        green= 0;
+  31   2              
+  32   2        yellow = 1;
+  33   2        delay(5000);
+  34   2        yellow = 0;
+  35   2         }
+  36   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    117    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      10
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

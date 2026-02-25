@@ -1,0 +1,127 @@
+C51 COMPILER V9.60.7.0   DIGITAL_CLOCK                                                     10/02/2025 12:00:33 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE DIGITAL_CLOCK
+OBJECT MODULE PLACED IN .\Objects\digital clock.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE digital clock.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\List
+                    -ings\digital clock.lst) TABS(2) OBJECT(.\Objects\digital clock.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #include<stdio.h>
+   3          sbit RS = P2^0;
+   4          sbit EN = P2^1;
+   5          
+   6          unsigned char hour = 12,min = 0,sec = 0;
+   7          
+   8          void delay_ms(unsigned int ms){ //this type of delay is used to get accurate delay of 1 sec insted of for 
+             -loop delay
+   9   1        unsigned int i;
+  10   1        for(i=0; i<ms; i++){ 
+  11   2        TMOD=0x01; 
+  12   2        TH0=0xFC;//1 ms from FC66 H to FFFF H we can use 0000 to ffff in 14 cycle insted of 1000 but it is not pr
+             -eferable
+  13   2        TL0=0x66;
+  14   2        TR0=1;
+  15   2        while(TF0==0);
+  16   2          TR0=0;
+  17   2          TF0=0;
+  18   2        }
+  19   1      }
+  20          
+  21          // 1 second delay
+  22          void delay_s() {
+  23   1          delay_ms(1000);   // 1000 × 1 ms = 1 sec
+  24   1      }
+  25          
+  26          void lcd_cmd(unsigned char cmd) {
+  27   1          P1 = cmd;
+  28   1          RS = 0;
+  29   1          EN = 1;
+  30   1          delay_ms(2);
+  31   1          EN = 0;
+  32   1      }
+  33          
+  34          void lcd_data(unsigned char da) {
+  35   1          P1 = da;
+  36   1          RS = 1;
+  37   1          EN = 1;
+  38   1          delay_ms(2);
+  39   1          EN = 0;
+  40   1      }
+  41          
+  42          void lcd_init() {   //commands of LCD
+  43   1          lcd_cmd(0x38);  
+  44   1          lcd_cmd(0x0C);  
+  45   1          lcd_cmd(0x06);  
+  46   1          lcd_cmd(0x01);  
+  47   1      }
+  48          
+  49          void lcd_string(char *str) {
+  50   1          while(*str != '\0') {
+  51   2              lcd_data(*str++);
+  52   2          }
+C51 COMPILER V9.60.7.0   DIGITAL_CLOCK                                                     10/02/2025 12:00:33 PAGE 2   
+
+  53   1      }
+  54          
+  55          void update_time(){
+  56   1          if(sec==60){
+  57   2            sec=0;
+  58   2            min++;
+  59   2           }
+  60   1          if(min==60){
+  61   2            min=0;
+  62   2            hour++;   
+  63   2          }
+  64   1            if(hour==24){
+  65   2            hour=0;
+  66   2          }
+  67   1        } 
+  68          
+  69          void main() {
+  70   1        
+  71   1              char buffer[16];//to store the sec in integer form as LCD can not read integers (except:"1","0")  
+  72   1              lcd_init();//call       
+  73   1              lcd_cmd(0x80);      // row 1 start
+  74   1              lcd_string("HH:MM:SS"); 
+  75   1        
+  76   1        while(1){
+  77   2          
+  78   2              lcd_cmd(0xC0);                 // Second row
+  79   2              lcd_string("            ");    // Clear previous content
+  80   2              lcd_cmd(0xC0);
+  81   2          
+  82   2              sprintf(buffer, "%02d:%02d:%02d", hour, min, sec);
+  83   2              
+  84   2              lcd_string(buffer);//pass to string to display
+  85   2              delay_s();
+  86   2              sec++;
+  87   2              update_time();
+  88   2        }
+  89   1      }
+  90          
+  91          
+  92          
+  93          /*8051 Timer Limits
+  94          Mode 0->  13-bit->  8192  8192 × 1.085 µs ˜ 8.9 ms->  TH0=0x00, TL0=0x00 (full)-> 1 s / 0.0089 s = ˜ 112
+  95          Mode 1->  16-bit->  65536 65536 × 1.085 µs ˜ 71.1 ms->  TH0=0x00, TL0=0x00 (full)-> 1 s / 0.0711 s  =˜ 14
+  96          Mode 2->  8-bit auto-reload-> 256 256 × 1.085 µs ˜ 0.277 ms-> TH0 = 0x00 (full), TL0 auto-reloads-> 1 s / 0
+             -.000277 s = ˜ 3610
+  97          Mode 3->  Split Timer-> TL0 & TH0 8-bit-> 256 × 1.085 µs ˜ 0.277 ms per 8-bit-> TL0/TH0 = 0x00 (full)-> 1 s
+             - / 0.000277 s = ˜ 361*/
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    237    ----
+   CONSTANT SIZE    =     37    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3      19
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

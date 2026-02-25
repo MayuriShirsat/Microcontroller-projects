@@ -1,0 +1,1 @@
+"counting LCD.C" OPTIMIZE (8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\counting LCD.lst) TABS (2) OBJECT(.\Objects\counting LCD.obj)

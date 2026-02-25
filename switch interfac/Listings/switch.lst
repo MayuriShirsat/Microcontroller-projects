@@ -1,0 +1,13 @@
+C51 COMPILER V9.60.7.0   SWITCH                                                            09/27/2025 11:24:44 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE SWITCH
+OBJECT MODULE PLACED IN .\Objects\switch.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE switch.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\sw
+                    -itch.lst) TABS(2) OBJECT(.\Objects\switch.obj)
+
+line level    source
+
+*** ERROR C318 OF switch.c: can't open file 'switch.c'
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)

@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\countind button presses.obj" 
+TO ".\Objects\counting button" 
+PRINT(".\Listings\counting button.m51")

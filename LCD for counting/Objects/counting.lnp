@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\counting LCD.obj" 
+TO ".\Objects\counting" 
+PRINT(".\Listings\counting.m51")

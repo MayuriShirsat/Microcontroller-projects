@@ -1,0 +1,46 @@
+C51 COMPILER V9.60.7.0   LED_BITWISE                                                       09/27/2025 09:53:25 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE LED_BITWISE
+OBJECT MODULE PLACED IN .\Objects\led bitwise.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE led bitwise.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listin
+                    -gs\led bitwise.lst) TABS(2) OBJECT(.\Objects\led bitwise.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          sbit led1 = P2^0;
+   3          
+   4          void delay(unsigned int count){
+   5   1        unsigned int i,j;
+   6   1        for(i=0;i<=count;i++){
+   7   2        for(j=0;j<1275;j++){}
+   8   2        }
+   9   1      }
+  10          void main(){
+  11   1        P2 = 0x00;
+  12   1      while(1){
+  13   2        led1=0;
+  14   2        delay(1000);
+  15   2        led1=1;
+  16   2        delay(1000);}
+  17   1      }
+  18          //  while(count){
+  19          //    i=115;
+  20          //  while(i>0)
+  21          //    i--;
+  22          //  count--;}
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     51    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

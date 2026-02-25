@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\temp sensor with fan.obj" 
+TO ".\Objects\temp sensor to on off fan" 
+PRINT(".\Listings\temp sensor to on off fan.m51")

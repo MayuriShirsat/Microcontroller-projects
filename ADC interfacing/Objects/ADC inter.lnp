@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\ADC.obj" 
+TO ".\Objects\ADC inter" 
+PRINT(".\Listings\ADC inter.m51")

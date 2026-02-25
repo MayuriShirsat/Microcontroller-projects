@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\led bitwise.obj" 
+TO ".\Objects\led blinking bitwise" 
+PRINT(".\Listings\led blinking bitwise.m51")

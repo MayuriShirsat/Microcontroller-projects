@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\digi counter.obj" 
+TO ".\Objects\digital counter" 
+PRINT(".\Listings\digital counter.m51")

@@ -1,0 +1,42 @@
+C51 COMPILER V9.60.7.0   RAMP_WAVE                                                         10/02/2025 18:38:35 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE RAMP_WAVE
+OBJECT MODULE PLACED IN .\Objects\RAMP Wave.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE RAMP Wave.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\RAMP Wave.lst) TABS(2) OBJECT(.\Objects\RAMP Wave.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          
+   3          void delay(unsigned char count){
+   4   1        unsigned int i,j;
+   5   1        for(i=0;i<count;i++){
+   6   2          for(j=0;j<=1275;j++){}
+   7   2          }
+   8   1        }
+   9          
+  10          void main(){
+  11   1        while(1){
+  12   2          unsigned int i;
+  13   2          for(i=0;i<=256;i++){
+  14   3            P1=i;
+  15   3            delay(10);
+  16   3          }
+  17   2        }
+  18   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     67    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

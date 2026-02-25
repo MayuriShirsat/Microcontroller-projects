@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\door passward.obj" 
+TO ".\Objects\door passward" 
+PRINT(".\Listings\door passward.m51")

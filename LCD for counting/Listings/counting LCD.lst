@@ -1,0 +1,74 @@
+C51 COMPILER V9.60.7.0   COUNTING_LCD                                                      09/28/2025 18:39:28 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE COUNTING_LCD
+OBJECT MODULE PLACED IN .\Objects\counting LCD.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE counting LCD.C OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listi
+                    -ngs\counting LCD.lst) TABS(2) OBJECT(.\Objects\counting LCD.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          
+   3          sbit RS = P3^0;
+   4          sbit RW = P3^1;
+   5          sbit EN = P3^2;
+   6          
+   7          void delay_ms(unsigned int ms) {
+   8   1          unsigned int i,j;
+   9   1          for(i=0;i<ms;i++)
+  10   1              for(j=0;j<1275;j++);  
+  11   1      }
+  12          void lcd_cmd(unsigned char cmd) {
+  13   1          P2 = cmd;
+  14   1          RS = 0;
+  15   1          EN = 1;
+  16   1          delay_ms(2);
+  17   1          EN = 0;
+  18   1      }
+  19          void lcd_data(unsigned char da) {
+  20   1          P2 = da;
+  21   1          RS = 1;
+  22   1          EN = 1;
+  23   1          delay_ms(2);
+  24   1          EN = 0;
+  25   1      }
+  26          void lcd_init() {   //commands of LCD
+  27   1          lcd_cmd(0x38);  
+  28   1          lcd_cmd(0x0C);  
+  29   1          lcd_cmd(0x06);  
+  30   1          lcd_cmd(0x01);  
+  31   1          delay_ms(2);
+  32   1      }
+  33          
+  34          void lcd_string(char *str) {
+  35   1          while(*str != '\0') {
+  36   2              lcd_data(*str++);
+  37   2          }
+  38   1      }
+  39          
+  40          void main() {
+  41   1          unsigned int sec = 0;
+  42   1        char buffer[16];//to store the sec in integer form as LCD can not read integers (except:"1","0")
+  43   1      
+  44   1          lcd_init();//call
+  45   1      
+  46   1          lcd_string("  Welcome !!!  ");
+  47   1          delay_ms(2000);      
+  48   1          lcd_cmd(0x01);       // Clear screen
+  49   1          lcd_string("Counting Secs:");
+  50   1      
+  51   1          while(1) {
+  52   2              lcd_cmd(0xC0);   // Move to 2nd line
+  53   2            sprintf(buffer, "Sec: %u   ", sec);//hold sec value as "Sec:5" etc
+*** WARNING C206 IN LINE 53 OF counting LCD.C: 'sprintf': missing function-prototype
+C51 COMPILER V9.60.7.0   COUNTING_LCD                                                      09/28/2025 18:39:28 PAGE 2   
+
+*** ERROR C267 IN LINE 53 OF counting LCD.C: 'sprintf': requires ANSI-style prototype
+  54   2              lcd_string(buffer);//pass to string to display
+  55   2              sec++;
+  56   2              delay_ms(1000);  // 1 second delay
+  57   2          }
+  58   1      }
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  1 ERROR(S)

@@ -1,0 +1,83 @@
+C51 COMPILER V9.60.7.0   BUTTON_CHANGE_LED_PATTERN                                         10/02/2025 09:01:46 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE BUTTON_CHANGE_LED_PATTERN
+OBJECT MODULE PLACED IN .\Objects\button change LED pattern.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE button change LED pattern.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND 
+                    -PRINT(.\Listings\button change LED pattern.lst) TABS(2) OBJECT(.\Objects\button change LED pattern.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          
+   3          sbit LED1=P2^0;
+   4          sbit LED2=P2^1;
+   5          sbit BUTTON=P2^2;
+   6          
+   7          void delay(unsigned int count){
+   8   1        unsigned int i,j;
+   9   1        for(i=0;i<count;i++){
+  10   2          for(j=0;j<=1275;j++){}
+  11   2          }
+  12   1        }
+  13            
+  14          void pattern1(){
+  15   1        LED1=1;LED2=0;
+  16   1        delay(500);
+  17   1        LED1=0;LED2=1;
+  18   1        delay(500);
+  19   1      }
+  20          void pattern2(){
+  21   1        LED1=1;LED2=1;
+  22   1        delay(200);
+  23   1        LED1=0;LED2=0;  
+  24   1        delay(300);
+  25   1        LED1=1;LED2=1;
+  26   1        delay(200);
+  27   1        LED1=0;LED2=0;  
+  28   1      }
+  29          void main(){
+  30   1        unsigned char mode = 0;   // 0 = pattern1, 1 = pattern2 
+  31   1        BUTTON=1;//input
+  32   1      
+  33   1        while(1){
+  34   2           if(BUTTON == 0){         // if button pressed
+  35   3               delay(200);          // debounce
+  36   3               if(BUTTON == 0){     // still pressed
+  37   4                   mode = !mode;    // toggle mode
+  38   4                   while(BUTTON==0); // wait for release
+  39   4               }
+  40   3           }
+  41   2      /*If button is pressed (BUTTON==0)  wait a little (delay(200)) to remove switch bounce.
+  42   2      Check again if button is still pressed. If yes  we treat this as a valid press.
+  43   2      mode = !mode;  toggles mode:
+  44   2      If mode was 0, it becomes 1.
+  45   2      If mode was 1, it becomes 0.
+  46   2      while(BUTTON==0);  wait here until the button is released.
+  47   2      (So one press counts only once).
+  48   2      If mode==0  run pattern1() (alternate blinking).
+  49   2      If mode==1  run pattern2() (both blink together).    
+  50   2      */
+  51   2           if(mode == 0)
+  52   2               pattern1();
+  53   2           else
+  54   2               pattern2();
+C51 COMPILER V9.60.7.0   BUTTON_CHANGE_LED_PATTERN                                         10/02/2025 09:01:46 PAGE 2   
+
+  55   2        }
+  56   1      }
+  57           
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    130    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

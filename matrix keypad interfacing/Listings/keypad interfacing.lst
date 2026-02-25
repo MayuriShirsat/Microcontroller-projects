@@ -1,0 +1,114 @@
+C51 COMPILER V9.60.7.0   KEYPAD_INTERFACING                                                10/03/2025 14:18:02 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE KEYPAD_INTERFACING
+OBJECT MODULE PLACED IN .\Objects\keypad interfacing.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE keypad interfacing.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.
+                    -\Listings\keypad interfacing.lst) TABS(2) OBJECT(.\Objects\keypad interfacing.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          
+   3          #define keypad P1  // Port1 connected to keypad
+   4          #define lcd P2     // Port2 connected to LCD
+   5          
+   6          sbit rs = P3^0;
+   7          sbit en = P3^1;
+   8          
+   9          // Lookup table for 4x4 keypad
+  10          char keymap[4][4] = {
+  11              {'1','2','3','A'},
+  12              {'4','5','6','B'},
+  13              {'7','8','9','C'},
+  14              {'*','0','#','D'}
+  15          };
+  16          
+  17          void delay(unsigned int ms){
+  18   1          unsigned int i,j;
+  19   1          for(i=0;i<ms;i++)
+  20   1              for(j=0;j<1275;j++);
+  21   1      }
+  22          
+  23          void lcd_cmd(unsigned char cmd){
+  24   1          rs=0;
+  25   1          lcd=cmd;
+  26   1          en=1; delay(2); en=0;
+  27   1      }
+  28          
+  29          void lcd_data(unsigned char dat){
+  30   1          rs=1;
+  31   1          lcd=dat;
+  32   1          en=1; delay(2); en=0;
+  33   1      }
+  34          
+  35          void lcd_init(){
+  36   1          lcd_cmd(0x38); 
+  37   1          lcd_cmd(0x0C); 
+  38   1          lcd_cmd(0x06); 
+  39   1          lcd_cmd(0x01); 
+  40   1      }
+  41          
+  42          void lcd_string(char *str){
+  43   1          while(*str) lcd_data(*str++);
+  44   1      }
+  45          
+  46          // Function to scan keypad
+  47          char keypad_scan(){
+  48   1          unsigned char row, col;
+  49   1        
+  50   1          for(row=0; row<4; row++){//The function activates one row at a time.
+  51   2              keypad = 0xF0;         // Make columns(P1.7 to P1.4) input, rows(P1.3 to P1.0) output
+  52   2      //P1.7 P1.6......P1.0 ->1111 0000
+  53   2            keypad &= ~(1<<row);   
+  54   2      /*Suppose we have a 4×4 keypad, and we are scanning row 2
+C51 COMPILER V9.60.7.0   KEYPAD_INTERFACING                                                10/03/2025 14:18:02 PAGE 2   
+
+  55   2      1)First, (1 << row) -> 1 << 2 = 0000 0100
+  56   2      2)Then, ~(1 << row) -> bitwise NOT -> 1111 1011
+  57   2      initially keypad value = 1111 1111
+  58   2      3)1111 1111 AND 1111 1011 = 1111 1011
+  59   2      Only row 2 bit became 0, rest stayed 1      
+  60   2      */
+  61   2              for(col=0; col<4; col++){//Check each column one by one to see if a key is pressed.
+  62   3                  if(!(keypad & (0x10<<col))){ 
+  63   4      /*(0x10 << col) -> selects column bit (P1.4–P1.7)
+  64   4      col=0 -> P1.4, col=1 -> P1.5, col=2 -> P1.6, col=3 -> P1.7
+  65   4      keypad & (0x10 << col) -> reads the column value  
+  66   4      (keypad & 0x20) = 0 -> !(0) = 1 -> key detected*/             
+  67   4                      while(!(keypad & (0x10<<col))); // Wait for release (debouncing)
+  68   4                      return keymap[row][col]; // Return pressed key
+  69   4                  }
+  70   3              }
+  71   2          }
+  72   1          return 0; // return 0 if No key pressed
+  73   1      }
+  74          
+  75          void main(){
+  76   1          char key;
+  77   1          lcd_init();
+  78   1          lcd_cmd(0x80);
+  79   1          lcd_string("Keypad Test");
+  80   1          
+  81   1          while(1){
+  82   2              key = keypad_scan();
+  83   2              if(key){
+  84   3                  lcd_cmd(0xC0);   // Move to 2nd row
+  85   3                  lcd_data(key);   // Display pressed key
+  86   3              }
+  87   2          }
+  88   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    240    ----
+   CONSTANT SIZE    =     12    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     16       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
