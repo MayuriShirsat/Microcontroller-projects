@@ -1,0 +1,281 @@
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    02/28/2026  18:03:02  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\keybord interfacing with lcd.obj TO .\Objects\keybord_inter
+>> facing_with_lcd PRINT (.\Listings\keybord_interfacing_with_lcd.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\STARTUP.obj (?C_STARTUP)
+  .\Objects\keybord interfacing with lcd.obj (KEYBORD_INTERFACING_WITH_LCD)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CLDPTR)
+
+
+LINK MAP OF MODULE:  .\Objects\keybord_interfacing_with_lcd (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0014H     UNIT         _DATA_GROUP_
+            DATA    001CH     000CH     UNIT         ?DT?KEYBORD_INTERFACING_WITH_LCD
+            IDATA   0028H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     00D6H     UNIT         ?PR?MAIN?KEYBORD_INTERFACING_WITH_LCD
+            CODE    08D6H     008CH     UNIT         ?C_C51STARTUP
+            CODE    0962H     005BH     UNIT         ?PR?KEYPAD_SCAN?KEYBORD_INTERFACING_WITH_LCD
+            CODE    09BDH     0048H     UNIT         ?CO?KEYBORD_INTERFACING_WITH_LCD
+            CODE    0A05H     0028H     UNIT         ?PR?_DELAY?KEYBORD_INTERFACING_WITH_LCD
+            CODE    0A2DH     0025H     UNIT         ?PR?_LCD_STRING?KEYBORD_INTERFACING_WITH_LCD
+            CODE    0A52H     0019H     UNIT         ?C?LIB_CODE
+            CODE    0A6BH     0014H     UNIT         ?PR?LCD_INIT?KEYBORD_INTERFACING_WITH_LCD
+            CODE    0A7FH     0012H     UNIT         ?PR?_LCD_CMD?KEYBORD_INTERFACING_WITH_LCD
+            CODE    0A91H     000FH     UNIT         ?C_INITSEG
+            CODE    0AA0H     0008H     UNIT         ?PR?_LCD_DATA?KEYBORD_INTERFACING_WITH_LCD
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\keybord_interfacing_with_lcd (?C_STARTUP)
+
+
+SEGMENT                                            DATA_GROUP 
+  +--> CALLED SEGMENT                            START    LENGTH
+----------------------------------------------------------------
+?C_C51STARTUP                                    -----    -----
+  +--> ?PR?MAIN?KEYBORD_INTERFACING_WITH_LCD
+  +--> ?C_INITSEG
+
+?PR?MAIN?KEYBORD_INTERFACING_WITH_LCD            0008H    0011H
+  +--> ?PR?LCD_INIT?KEYBORD_INTERFACING_WITH...
+  +--> ?PR?_LCD_CMD?KEYBORD_INTERFACING_WITH...
+  +--> ?CO?KEYBORD_INTERFACING_WITH_LCD
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  02/28/2026  18:03:02  PAGE 2
+
+
+  +--> ?PR?_LCD_STRING?KEYBORD_INTERFACING_W...
+  +--> ?PR?KEYPAD_SCAN?KEYBORD_INTERFACING_W...
+  +--> ?PR?_LCD_DATA?KEYBORD_INTERFACING_WIT...
+  +--> ?PR?_DELAY?KEYBORD_INTERFACING_WITH_LCD
+
+?PR?LCD_INIT?KEYBORD_INTERFACING_WITH...         -----    -----
+  +--> ?PR?_LCD_CMD?KEYBORD_INTERFACING_WITH...
+
+?PR?_LCD_CMD?KEYBORD_INTERFACING_WITH...         -----    -----
+  +--> ?PR?_DELAY?KEYBORD_INTERFACING_WITH_LCD
+
+?PR?_LCD_STRING?KEYBORD_INTERFACING_W...         0019H    0003H
+  +--> ?PR?_LCD_DATA?KEYBORD_INTERFACING_WIT...
+
+?PR?_LCD_DATA?KEYBORD_INTERFACING_WIT...         -----    -----
+  +--> ?PR?_DELAY?KEYBORD_INTERFACING_WITH_LCD
+
+?PR?KEYPAD_SCAN?KEYBORD_INTERFACING_W...         -----    -----
+  +--> ?PR?_DELAY?KEYBORD_INTERFACING_WITH_LCD
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\keybord_interfacing_with_lcd (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:08D6H         SEGMENT       ?C_C51STARTUP
+  I:0028H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:08D9H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:08D6H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:08D6H         LINE#         133
+  C:08D8H         LINE#         134
+  C:08D9H         LINE#         135
+  C:08DAH         LINE#         136
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  02/28/2026  18:03:02  PAGE 3
+
+
+  C:08DCH         LINE#         185
+  C:08DFH         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        KEYBORD_INTERFACING_WITH_LCD
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:0962H         PUBLIC        keypad_scan
+  D:001CH         PUBLIC        keymap
+  C:0A0DH         PUBLIC        _delay
+  C:0800H         PUBLIC        main
+  C:0A2DH         PUBLIC        _lcd_string
+  C:0AA0H         PUBLIC        _lcd_data
+  B:00B0H.0       PUBLIC        led
+  C:0A89H         PUBLIC        _lcd_cmd
+  C:0A6BH         PUBLIC        lcd_init
+  B:00B0H.6       PUBLIC        en
+  B:00B0H.7       PUBLIC        rs
+  -------         PROC          L?0053
+  -------         ENDPROC       L?0053
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        ms
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0002H         SYMBOL        j
+  -------         ENDDO         
+  C:0A0DH         LINE#         19
+  C:0A0DH         LINE#         21
+  C:0A17H         LINE#         22
+  C:0A2CH         LINE#         23
+  -------         ENDPROC       _DELAY
+  -------         PROC          L?0052
+  -------         ENDPROC       L?0052
+  -------         PROC          _LCD_CMD
+  D:0007H         SYMBOL        cmd
+  C:0A89H         LINE#         26
+  C:0A89H         LINE#         27
+  C:0A8BH         LINE#         28
+  C:0A8BH         LINE#         29
+  C:0A8BH         LINE#         30
+  C:0A8EH         LINE#         31
+  C:0A90H         LINE#         32
+  -------         ENDPROC       _LCD_CMD
+  -------         PROC          _LCD_DATA
+  D:0007H         SYMBOL        dat
+  C:0AA0H         LINE#         35
+  C:0AA0H         LINE#         36
+  C:0AA2H         LINE#         37
+  C:0AA2H         LINE#         38
+  C:0AA2H         LINE#         39
+  C:0AA5H         LINE#         40
+  C:0AA7H         LINE#         41
+  -------         ENDPROC       _LCD_DATA
+  -------         PROC          _LCD_STRING
+  D:0019H         SYMBOL        str
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  02/28/2026  18:03:02  PAGE 4
+
+
+  C:0A2DH         LINE#         44
+  C:0A33H         LINE#         45
+  C:0A3EH         LINE#         46
+  C:0A51H         LINE#         47
+  -------         ENDPROC       _LCD_STRING
+  -------         PROC          LCD_INIT
+  C:0A6BH         LINE#         50
+  C:0A6BH         LINE#         51
+  C:0A70H         LINE#         52
+  C:0A75H         LINE#         53
+  C:0A7AH         LINE#         54
+  -------         ENDPROC       LCD_INIT
+  -------         PROC          KEYPAD_SCAN
+  -------         DO            
+  D:0001H         SYMBOL        row
+  -------         ENDDO         
+  C:0962H         LINE#         58
+  C:0962H         LINE#         61
+  C:0964H         LINE#         63
+  C:0967H         LINE#         64
+  C:0975H         LINE#         66
+  C:098AH         LINE#         67
+  C:099FH         LINE#         68
+  C:09B6H         LINE#         69
+  C:09BAH         LINE#         70
+  C:09BCH         LINE#         71
+  -------         ENDPROC       KEYPAD_SCAN
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        i
+  D:0009H         SYMBOL        j
+  D:000AH         SYMBOL        set_pass
+  D:0011H         SYMBOL        enter_pass
+  D:0007H         SYMBOL        correct
+  D:0018H         SYMBOL        key
+  -------         ENDDO         
+  C:0800H         LINE#         74
+  C:0800H         LINE#         82
+  C:0803H         LINE#         84
+  C:0808H         LINE#         85
+  C:0811H         LINE#         88
+  C:0814H         LINE#         89
+  C:081CH         LINE#         90
+  C:081EH         LINE#         92
+  C:0821H         LINE#         93
+  C:0826H         LINE#         94
+  C:082FH         LINE#         96
+  C:0836H         LINE#         99
+  C:0839H         LINE#         101
+  C:083EH         LINE#         102
+  C:0847H         LINE#         104
+  C:084AH         LINE#         105
+  C:0852H         LINE#         106
+  C:0854H         LINE#         108
+  C:0857H         LINE#         109
+  C:085CH         LINE#         110
+  C:0865H         LINE#         112
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  02/28/2026  18:03:02  PAGE 5
+
+
+  C:0867H         LINE#         114
+  C:086AH         LINE#         115
+  C:087AH         LINE#         116
+  C:087CH         LINE#         117
+  C:087EH         LINE#         118
+  C:087EH         LINE#         119
+  C:0885H         LINE#         121
+  C:0888H         LINE#         122
+  C:088DH         LINE#         123
+  C:0896H         LINE#         125
+  C:0898H         LINE#         126
+  C:089FH         LINE#         127
+  C:08A1H         LINE#         129
+  C:08A3H         LINE#         130
+  C:08A3H         LINE#         131
+  C:08A3H         LINE#         132
+  C:08A8H         LINE#         133
+  C:08B1H         LINE#         134
+  C:08B8H         LINE#         135
+  C:08B8H         LINE#         136
+  C:08C4H         LINE#         138
+  C:08C9H         LINE#         139
+  C:08D2H         LINE#         140
+  C:08D4H         LINE#         142
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        KEYBORD_INTERFACING_WITH_LCD
+
+  -------         MODULE        ?C?CLDPTR
+  C:0A52H         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0211H BYTE (25%) *
+******************************************************************************
+
+Program Size: data=41.0 xdata=0 code=683
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

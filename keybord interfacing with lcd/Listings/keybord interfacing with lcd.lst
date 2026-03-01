@@ -1,0 +1,171 @@
+C51 COMPILER V9.60.7.0   KEYBORD_INTERFACING_WITH_LCD                                      02/28/2026 18:03:02 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE KEYBORD_INTERFACING_WITH_LCD
+OBJECT MODULE PLACED IN .\Objects\keybord interfacing with lcd.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE keybord interfacing with lcd.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTE
+                    -ND PRINT(.\Listings\keybord interfacing with lcd.lst) TABS(2) OBJECT(.\Objects\keybord interfacing with lcd.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          
+   3          #define keypad P1     // Keypad ? Port1
+   4          #define lcd P2        // LCD Data ? Port2
+   5          
+   6          sbit rs = P3^7;
+   7          sbit en = P3^6;
+   8          sbit led = P3^0;
+   9          
+  10          /* Keypad Map */
+  11          char keymap[4][3]={
+  12          {'1','2','3'},
+  13          {'4','5','6'},
+  14          {'7','8','9'},
+  15          {'*','0','#'}
+  16          };
+  17          
+  18          /* Delay */
+  19          void delay(unsigned int ms){
+  20   1          unsigned int i,j;
+  21   1          for(i=0;i<ms;i++)
+  22   1              for(j=0;j<1275;j++);
+  23   1      }
+  24          
+  25          /* LCD COMMAND */
+  26          void lcd_cmd(unsigned char cmd){
+  27   1          rs=0;
+  28   1          lcd=cmd;
+  29   1          en=1;
+  30   1          delay(5);
+  31   1          en=0;
+  32   1      }
+  33          
+  34          /* LCD DATA */
+  35          void lcd_data(unsigned char dat){
+  36   1          rs=1;
+  37   1          lcd=dat;
+  38   1          en=1;
+  39   1          delay(5);
+  40   1          en=0;
+  41   1      }
+  42          
+  43          /* LCD STRING */
+  44          void lcd_string(char *str){
+  45   1          while(*str)
+  46   1              lcd_data(*str++);
+  47   1      }
+  48          
+  49          /* LCD INIT */
+  50          void lcd_init(){
+  51   1          lcd_cmd(0x38);
+  52   1          lcd_cmd(0x0C);
+  53   1          lcd_cmd(0x06);
+  54   1          lcd_cmd(0x01);
+C51 COMPILER V9.60.7.0   KEYBORD_INTERFACING_WITH_LCD                                      02/28/2026 18:03:02 PAGE 2   
+
+  55   1      }
+  56          
+  57          /* KEYPAD SCAN (CORRECT VERSION) */
+  58          char keypad_scan(){
+  59   1          unsigned char row;
+  60   1      
+  61   1          for(row=0;row<4;row++){
+  62   2      
+  63   2              keypad = 0xF0;              // Columns HIGH
+  64   2              keypad &= ~(1<<row);        // One row LOW
+  65   2      
+  66   2              if(!(keypad & 0x10)){ delay(200); return keymap[row][0]; }
+  67   2              if(!(keypad & 0x20)){ delay(200); return keymap[row][1]; }
+  68   2              if(!(keypad & 0x40)){ delay(200); return keymap[row][2]; }
+  69   2          }
+  70   1          return 0;
+  71   1      }
+  72          
+  73          /* MAIN PROGRAM */
+  74          void main(){
+  75   1      
+  76   1      unsigned char i,j;
+  77   1      unsigned char set_pass[7];
+  78   1      unsigned char enter_pass[7];
+  79   1      unsigned char correct;
+  80   1      char key;
+  81   1      
+  82   1      lcd_init();
+  83   1      
+  84   1      lcd_cmd(0x80);
+  85   1      lcd_string("SET PASSWORD");
+  86   1      
+  87   1      /* SET PASSWORD */
+  88   1      for(i=0;i<7;i++){
+  89   2          while(!(key=keypad_scan()));
+  90   2          set_pass[i]=key;
+  91   2      
+  92   2          lcd_cmd(0xC0+i);
+  93   2          lcd_data(key);
+  94   2      }
+  95   1      
+  96   1      delay(2000);
+  97   1      
+  98   1      /* PASSWORD CHECK */
+  99   1      for(j=0;j<3;j++){
+ 100   2      
+ 101   2          lcd_cmd(0x01);
+ 102   2          lcd_string("ENTER PASSWORD");
+ 103   2      
+ 104   2          for(i=0;i<7;i++){
+ 105   3              while(!(key=keypad_scan()));
+ 106   3              enter_pass[i]=key;
+ 107   3      
+ 108   3              lcd_cmd(0xC0+i);
+ 109   3              lcd_data('*');
+ 110   3          }
+ 111   2      
+ 112   2          correct=1;
+ 113   2      
+ 114   2          for(i=0;i<7;i++){
+ 115   3              if(set_pass[i]!=enter_pass[i]){
+ 116   4                  correct=0;
+C51 COMPILER V9.60.7.0   KEYBORD_INTERFACING_WITH_LCD                                      02/28/2026 18:03:02 PAGE 3   
+
+ 117   4                  break;
+ 118   4              }
+ 119   3          }
+ 120   2      
+ 121   2          if(correct){
+ 122   3              lcd_cmd(0x01);
+ 123   3              lcd_string("ACCESS GRANTED");
+ 124   3      
+ 125   3              led=1;
+ 126   3              delay(9000);
+ 127   3              led=0;
+ 128   3      
+ 129   3              while(1);
+ 130   3          }
+ 131   2          else{
+ 132   3              lcd_cmd(0x01);
+ 133   3              lcd_string("WRONG PASSWORD");
+ 134   3              delay(2000);
+ 135   3          }
+ 136   2      }
+ 137   1      
+ 138   1      lcd_cmd(0x01);
+ 139   1      lcd_string("SYSTEM LOCKED");
+ 140   1      led=0;
+ 141   1      
+ 142   1      while(1);
+ 143   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    428    ----
+   CONSTANT SIZE    =     72    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     12      20
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

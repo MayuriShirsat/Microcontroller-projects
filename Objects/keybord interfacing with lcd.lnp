@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\keybord interfacing with lcd.obj" 
+TO ".\Objects\keybord interfacing with lcd" 
+PRINT(".\Listings\keybord interfacing with lcd.m51") RAMSIZE(64) 
